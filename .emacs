@@ -37,6 +37,9 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+; Maximize the frame on startup
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 (column-number-mode)
 (global-display-line-numbers-mode t)
 
@@ -115,6 +118,9 @@
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
+;Configure git path
+(add-to-list 'exec-path "c:/Progs/vendor/git-for-windows/cmd")
+;(setq 'magit-git-executable "c:/Progs/vendor/git-for-windows/cmd/git.exe")
 ; (use-package evil-magit
 ;  :after 
 
