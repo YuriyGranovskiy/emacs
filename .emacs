@@ -14,7 +14,7 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(ssh-agency ssh evil-magit magit projectile counsel ivy-rich which-key rainbow-delimiters doom-themes use-package doom-modeline mode csharp-mode go-mode yaml-mode solarized-theme ##))
+   '(command-log-mode lsp-mode omnisharp ssh-agency ssh evil-magit magit projectile counsel ivy-rich which-key rainbow-delimiters doom-themes use-package doom-modeline mode csharp-mode go-mode yaml-mode solarized-theme ##))
  '(tool-bar-mode nil)
  '(tooltip-mode nil))
  
@@ -39,6 +39,8 @@
 
 ; Maximize the frame on startup
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+(set-frame-parameter (selected-frame) 'alpha '(85 . 50))
+(add-to-list 'default-frame-alist '(alpha . (85 . 50)))
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
@@ -118,9 +120,32 @@
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-;Configure git path
-(add-to-list 'exec-path "c:/Progs/vendor/git-for-windows/cmd")
-;(setq 'magit-git-executable "c:/Progs/vendor/git-for-windows/cmd/git.exe")
-; (use-package evil-magit
-;  :after 
+(use-package omnisharp)
 
+
+(defun my-split-window-below (&optional arg)
+  ""
+  (interactive "P")
+  (let ((proportion (* (or arg 5) 0.1)))
+    (split-window-below (round (* proportion (window-height))))))
+
+(defun my-split-window-right (&optional arg)
+  ""
+  (interactive "P")
+  (let ((proportion (* (or arg 5) 0.1)))
+    (split-window-right (round (* proportion (window-height))))))
+
+(my-split-window-below 8)
+(my-split-window-right 8)
+
+(prefer-coding-system 'utf-8)
+
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t))
+
+; (add-hook 'csharp-mode-hook 'lsp-mode)
+(use-package command-log-mode)
