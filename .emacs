@@ -19,7 +19,7 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(neotree neo-tree dap-mode yasnippet company command-log-mode lsp-mode omnisharp ssh-agency ssh evil-magit magit projectile counsel ivy-rich which-key rainbow-delimiters doom-themes use-package doom-modeline mode csharp-mode go-mode yaml-mode solarized-theme ##))
+   '(visual-fill-column visual-fill org-bullets all-the-icons neotree neo-tree dap-mode yasnippet company command-log-mode lsp-mode omnisharp ssh-agency ssh evil-magit magit projectile counsel ivy-rich which-key rainbow-delimiters doom-themes use-package doom-modeline mode csharp-mode go-mode yaml-mode solarized-theme ##))
  '(tool-bar-mode nil)
  '(tooltip-mode nil))
  
@@ -30,7 +30,7 @@
  ;; If there is more than one, they won't work right.
  )
 
-(set-face-attribute 'default nil :height 130)
+(set-face-attribute 'default nil :font "Fira Mono:antialias=subpixel" :height 130)
 
 ;; Install and configure packages
 (package-initialize)
@@ -44,11 +44,32 @@
 ; Maximize the frame on startup
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 ; Make emacs transparent
-(set-frame-parameter (selected-frame) 'alpha '(85 . 50))
-(add-to-list 'default-frame-alist '(alpha . (85 . 50)))
+(set-frame-parameter (selected-frame) 'alpha '(98 . 50))
+(add-to-list 'default-frame-alist '(alpha . (98 . 50)))
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
+
+(use-package org
+  :config
+  (setq org-ellipsis " ▾"
+	org-hide-emphasis-markers t)
+  (setq org-agenda-files
+	'("~/OrgFiles/Tasks.org")))
+
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+(defun org-mode-visual-fill ()
+  (setq visual-fill-column-width 120
+	visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook (org-mode . org-mode-visual-fill))
 
 (dolist (mode '(org-mode-hook
 		term-mode-hook
