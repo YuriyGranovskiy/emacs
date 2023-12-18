@@ -73,7 +73,8 @@
 
 (dolist (mode '(org-mode-hook
 		term-mode-hook
-		eshell-mode-hook))
+		eshell-mode-hook
+		neotree-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (use-package ivy
@@ -212,7 +213,7 @@
                 (neotree-find file-name)))
         (message "Could not find git project root."))))
 
-(global-set-key [f8] 'neotree-project-dir)
+(global-set-key [f8] 'neotree-toggle)
 (setq neo-window-width 50)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
