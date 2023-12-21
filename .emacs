@@ -10,16 +10,16 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(blink-cursor-mode nil)
- '(custom-enabled-themes '(solarized-dark))
+ '(custom-enabled-themes '(timu-spacegrey))
  '(custom-safe-themes
-   '("fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" default))
+   '("3074fda75f35f990d112fb75681729a74b6c7f15d3e5dfcf80313abb4cd39ed8" "77fff78cc13a2ff41ad0a8ba2f09e8efd3c7e16be20725606c095f9a19c24d3d" default))
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(visual-fill-column visual-fill org-bullets all-the-icons neotree neo-tree dap-mode yasnippet company command-log-mode lsp-mode omnisharp ssh-agency ssh evil-magit magit projectile counsel ivy-rich which-key rainbow-delimiters doom-themes use-package doom-modeline mode csharp-mode go-mode yaml-mode solarized-theme ##))
+   '(zweilight-theme color-theme-sanityinc-solarized timu-spacegrey-theme sublime-themes atom-one-dark-theme vscode-dark-plus-theme zenburn-theme spacemacs-theme vs-dark-theme dockerfile-mode all-the-icons-nerd-fonts visual-fill-column visual-fill org-bullets all-the-icons neotree neo-tree dap-mode yasnippet company command-log-mode lsp-mode omnisharp ssh-agency ssh evil-magit magit projectile counsel ivy-rich which-key rainbow-delimiters doom-themes use-package doom-modeline mode csharp-mode go-mode yaml-mode solarized-theme ##))
  '(tool-bar-mode nil)
  '(tooltip-mode nil))
  
@@ -28,7 +28,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))
 
 (set-face-attribute 'default nil :font "Fira Mono:antialias=subpixel" :height 130)
 
@@ -50,12 +50,19 @@
 (column-number-mode)
 (global-display-line-numbers-mode t)
 
+;;
+;; Org mode 
 (use-package org
   :config
   (setq org-ellipsis " ▾"
 	org-hide-emphasis-markers t)
   (setq org-agenda-files
 	'("~/OrgFiles/Tasks.org")))
+
+;; C-j is used for org-return-and-maybe-indent by default
+(defun unset-c-j ()
+  (local-unset-key (kbd "C-j")))
+(add-hook 'org-mode-hook 'unset-c-j)
 
 (use-package org-bullets
   :after org
@@ -71,6 +78,8 @@
 (use-package visual-fill-column
   :hook (org-mode . org-mode-visual-fill))
 
+
+;;
 (dolist (mode '(org-mode-hook
 		term-mode-hook
 		eshell-mode-hook
@@ -92,7 +101,7 @@
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-solarized-dark t)
+  (load-theme 'timu-spacegrey t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -102,7 +111,8 @@
   (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
   (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+  ;; (doom-themes-org-config)
+  )
 
 (use-package all-the-icons)
 
@@ -217,7 +227,7 @@
 (setq neo-window-width 50)
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
-;(use-package dap-mode
+ ;(use-package dap-mode
 ;  :ensure t
 ;  :config
 ;  (dap-mode t)
